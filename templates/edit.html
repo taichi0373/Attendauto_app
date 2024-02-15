@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block customcss %}
+<link rel="stylesheet" href="login.css">
+{% endblock %}
+
+{% block title %}
+時間割編集
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <form action="/edit/{{ course.id }}" method="POST">
+        {{ form.csrf_token }}
+        
+        {{ form.name.label }}
+        {{ form.name(class="form-control",  id="floatingInput", placeholder=course.name) }}
+
+        {{ form.day_time.label }}
+        {{ form.day_time(class="form-select form-select-lg mb-3") }}
+
+        {{ form.start_time.label }}
+        {{ form.start_time(class="form-select form-select-lg mb-3") }}
+
+        <a href="/" class="btn btn-secondary">戻る</a>
+        {{ form.submit(class="btn btn-primary") }}
+
+    </form>
+</div>
+{% endblock %}

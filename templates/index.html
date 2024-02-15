@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}
+時間割
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container">
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class=flashes>
+      {% for category, message in messages %}
+      <div class="alert alert-{{ category }} mt-4" role="alert">
+        <li class="list-unstyled">{{ message }}</li>
+      </div>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  {% endwith %}
+
+  <table class="table table-bordered mt-4">
+    <thead class="table-light">
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">月</th>
+        <th scope="col">火</th>
+        <th scope="col">水</th>
+        <th scope="col">木</th>
+        <th scope="col">金</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for time in times %}
+      <tr>
+        <th scope="row" width="5%" height="5%">{{ time }}限</th>
+        {% for day in days %}
+        <td width="19%" height="100px">
+          {% for course in courses %}
+            {% if course.start_time == time and course.day_time == day %}
+              <a href="/attend/{{ course.id }}">{{ course.name }}</a>
+              <div class="mt-3">
+                <a class="btn btn-light" href="/edit/{{ course.id }}"><i class="bi bi-pencil-fill"></i></a>
+                <a class="btn btn-secondary" href="/delete/{{ course.id }}"><i class="bi bi-trash"></i></a>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+      
+  <div>
+  <a class="btn btn-primary" href="/create_time">講義登録</a>
+  <a class="btn btn-primary" href="/auto">自動化</a>
+  </div>
+</div>
+{% endblock %}
